@@ -2,11 +2,11 @@ import * as bcrypt from 'bcrypt';
 
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, Unique, BaseEntity, getRepository} from "typeorm";
 import {IsDate, IsNotEmpty, IsString} from 'class-validator';
-import { Exclude } from 'class-transformer';
 
 import {MailEntity} from "./mail.entity";
 import {PhoneEntity} from "./phone.entity";
 import {ContactEntity} from "./contact.entity";
+import {CommentEntity} from "./comment.entity";
 
 export type UserRoleType = "admin" | "client";
 export type UserGenreType = "masculin" | "feminin" | "autre";
@@ -62,6 +62,9 @@ export class UserEntity extends BaseEntity {
 
     @OneToMany(type => ContactEntity, c => c.user,{ cascade: ['insert', 'update'] })
     contacts: ContactEntity[];
+
+    @OneToMany(type => CommentEntity, c => c.author,{ cascade: ['insert', 'update'] })
+    comments: CommentEntity[];
 
     async setHash(pass: string): Promise<boolean> {
         return bcrypt

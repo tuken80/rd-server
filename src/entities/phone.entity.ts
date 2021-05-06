@@ -6,7 +6,6 @@ import {
     JoinColumn,
     OneToMany,
     ManyToOne,
-    Unique,
     getRepository
 } from "typeorm";
 import {
